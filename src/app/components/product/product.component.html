@@ -1,0 +1,23 @@
+<input type="text" #name id="name" >
+<input type="text" #price id="price">
+<button (click)="addProduct(name.value,price.value)">Add</button>
+
+
+<table class="table table-hover">
+  <thead>
+  <tr>
+      <td>#</td>
+      <td>Product Name</td>
+      <td>Product Price</td>
+  </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let product of products">
+          <td>{{product.id}}</td>
+          <td>{{product.name}}</td>
+          <td>{{product.price | currency}}</td>
+          <button (click)="editProduct(product.id)">Edit</button>
+          <button (click)="removeProduct(product.id)" id={{product.id}}>Delete</button>
+      </tr>
+  </tbody>
+  </table>
