@@ -1,23 +1,50 @@
-<input type="text" #name id="name" >
-<input type="text" #price id="price">
-<button (click)="addProduct(name.value,price.value)">Add</button>
+<button type="button" class="btn btn-primary m-5" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Add product</button>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">New Product</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Name:</label>
+              <input type="text" class="form-control" id="name" #name>
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Price:</label>
+              <input class="form-control" type="text" id="price" #price>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="editing == !editing">Close</button>
+          <button type="button" class="btn btn-primary" (click)="addProduct(name.value,price.value)" *ngIf="!editing" data-bs-dismiss="modal">Submit</button>
+          <button type="button" class="btn btn-primary" (click)="submitEdit()" *ngIf="editing" data-bs-dismiss="modal">Edit</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
-<table class="table table-hover">
-  <thead>
-  <tr>
-      <td>#</td>
-      <td>Product Name</td>
-      <td>Product Price</td>
-  </tr>
-  </thead>
-  <tbody>
-      <tr *ngFor="let product of products">
-          <td>{{product.id}}</td>
-          <td>{{product.name}}</td>
-          <td>{{product.price | currency}}</td>
-          <button (click)="editProduct(product.id)">Edit</button>
-          <button (click)="removeProduct(product.id)" id={{product.id}}>Delete</button>
+  <table class="table table-dark table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Product Name</th>
+        <th scope="col">Product Price</th>
+        <th scope="col" colspan="2" class="text-center"></th>
       </tr>
-  </tbody>
+    </thead>
+    <tbody>
+        <tr *ngFor="let product of products">
+            <td>{{product.id}}</td>
+            <td>{{product.name}}</td>
+            <td>{{product.price | currency}}</td>
+            <td> <button class="w-50 btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" (click)="editProduct(product)">Edit</button></td>
+            <td><button class="w-50 btn btn-outline-danger" (click)="removeProduct(product.id)" id={{product.id}}>Delete</button></td>
+        </tr>
+    </tbody>
   </table>

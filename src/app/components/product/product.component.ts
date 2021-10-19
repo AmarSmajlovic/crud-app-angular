@@ -15,6 +15,9 @@ export class ProductComponent implements OnInit {
     {id:3,name:'cAMERA',price:200},
   ];
 
+  editing = false;
+  idEdit:any;
+
   constructor() { 
   }
 
@@ -27,14 +30,25 @@ export class ProductComponent implements OnInit {
 
   removeProduct(id:any){
   const index = this.products.findIndex(product=> product.id == id);
-  this.products.splice(index,1);
+  const potvrda = confirm('Are you sure?');
+  if(potvrda){
+    this.products.splice(index,1);
+  }
   };
 
-  editProduct(id:any){
-    const index = this.products.findIndex(product=>product.id == id);
-    console.log(this.products[index]);
-    (<HTMLInputElement>document.getElementById('name')).value = this.products[index].name;
-    (<HTMLInputElement>document.getElementById('price')).value = this.products[index].price;
+
+  editProduct(product:Product){
+    console.log(product);
+    (<HTMLInputElement>document.getElementById('name')).value = product.name;
+    (<HTMLInputElement>document.getElementById('price')).value =product.price;
+    this.editing = true;
+    this.idEdit = product.id;
+  }
+
+  submitEdit(){
+    this.products[this.idEdit -1].name = (<HTMLInputElement>document.getElementById('name')).value;
+    this.products[this.idEdit -1].price =  (<HTMLInputElement>document.getElementById('price')).value;
+    this.editing = false;
   }
 
 
